@@ -1,13 +1,27 @@
 package com.itrug.mobile.model;
-
+/**
+ * 用户类
+ */
 public class User {
+    //编号
     private int id;
+
+    //登陆名
     private String username;
-    private String password;
-    private boolean sex;
-    private boolean isAdmin;
-    private int age;
+    //昵称
     private String nickname;
+
+    //登陆密码
+    private String password;
+
+    //性别
+    private boolean sex;
+
+    //是否是管理员
+    private boolean isAdmin;
+
+    //年龄
+    private int age;
 
     public int getId() {
         return id;

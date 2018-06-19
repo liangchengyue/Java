@@ -9,8 +9,5 @@
         <module name="com.itrug.mobile" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.itrug.mobile" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
