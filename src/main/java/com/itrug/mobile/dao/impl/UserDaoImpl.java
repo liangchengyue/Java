@@ -67,7 +67,6 @@ public class UserDaoImpl implements IUserDao {
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
         List<User> users=new ArrayList<User>();
         try {
-            statement.setString();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
