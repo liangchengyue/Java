@@ -5,9 +5,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-@WebServlet(urlPatterns = "/Test")
-public class TestServlet extends BaseServlet {
+
+@WebServlet(urlPatterns = "/test")
+public class TestAction extends BaseAction {
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("1233____1223");
+        System.out.println("-----------------------------------");
     }
 }
