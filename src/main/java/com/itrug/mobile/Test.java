@@ -9,14 +9,16 @@ import java.util.List;
 public class Test {
     public static void main(String arg[]){
         UserService userService=new UserServiceImp();
-//        User user=new User();
-//        user.setUsername("zxx12");
-//        user.setNickName("幸福摩天轮");
-//        user.setSex(false);
-//        user.setAge(20);
-//        user.setAdmin(true);
-//        user.setPassword("zxx123456");
-        userService.delete(7);
+        User user=new User();
+        user.setId(8);
+        user.setUsername("zxx13");
+        user.setNickname("HHHHH10");
+        user.setSex(false);
+        user.setAge(20);
+        user.setAdmin(true);
+        user.setPassword("zxx1234567");
+//        userService.delete(7);
+        userService.update(user);
         System.out.print("");
     }
 }

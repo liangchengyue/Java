@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
                 user.setId(resultSet.getInt("id"));
                 user.setAdmin(resultSet.getBoolean("isadmin"));
                 user.setAge(resultSet.getInt("age"));
-                user.setNickName(resultSet.getString("nickname"));
+                user.setNickname(resultSet.getString("nickname"));
                 user.setSex(resultSet.getBoolean("sex"));
                 user.setUsername(resultSet.getString("username"));
             }
@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao {
                 user.setId(resultSet.getInt("id"));
                 user.setAdmin(resultSet.getBoolean("isadmin"));
                 user.setAge(resultSet.getInt("age"));
-                user.setNickName(resultSet.getString("nickname"));
+                user.setNickname(resultSet.getString("nickname"));
                 user.setSex(resultSet.getBoolean("sex"));
                 user.setUsername(resultSet.getString("username"));
                 userList.add(user);
@@ -94,9 +94,23 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        String sql="DELETE FROM `user` WHERE id=?";
-
-        return null;
+        String sql="UPDATE `user` SET nickname=?,password=?,username=?,age=?,sex=?,isadmin=? where id=?";
+        Connection connection = DataBaseUtils.getConnection();
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
+        try {
+            statement.setString(1, user.getNickname());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getUsername());
+            statement.setInt(4, user.getAge());
+            statement.setBoolean(5, user.isSex());
+            statement.setBoolean(6, user.isAdmin());
+            statement.setInt(7,user.getId());
+            statement.executeUpdate();
+            DataBaseUtils.closeStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
@@ -116,7 +130,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findByUserName(String username) {
-        String sql = "SELECT id,username,password FROM t_users tu WHERE tu.username = ?";
+        String sql = "SELECT id,nickname,username,age,sex,isadmin FROM `user` tu WHERE tu.username = ?";
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         User user = null;
