@@ -68,9 +68,9 @@ public class MobileDaoImpl implements MobileDao {
 
     @Override
     public Mobile save(Mobile mobile) {
-        String sql = "INSERT INTO model(name,image,price,model,vendor) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO mobile(name,image,price,model,vendor) VALUES(?,?,?,?,?)";
         Connection connection = DataBaseUtils.getConnection();
-        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
             statement.setString(1,mobile.getName());
             statement.setString(2, mobile.getImage());
@@ -78,11 +78,6 @@ public class MobileDaoImpl implements MobileDao {
             statement.setString(4, mobile.getModel());
             statement.setString(5, mobile.getVendor());
             int rows = statement.executeUpdate();
-            //获取自增主键
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                mobile.setId(resultSet.getInt(1));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
@@ -94,7 +89,7 @@ public class MobileDaoImpl implements MobileDao {
 
     @Override
     public Mobile update(Mobile mobile) {
-        String sql="UPDATE model SET name=?,image=?,price=?,model=?,vendor=? WHERE id=?";
+        String sql="UPDATE mobile SET name=?,image=?,price=?,model=?,vendor=? WHERE id=?";
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
@@ -103,6 +98,7 @@ public class MobileDaoImpl implements MobileDao {
             statement.setDouble(3,mobile.getPrice());
             statement.setString(4,mobile.getModel());
             statement.setString(5,mobile.getVendor());
+            statement.setInt(6,mobile.getId());
             statement.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
@@ -116,9 +112,9 @@ public class MobileDaoImpl implements MobileDao {
 
     @Override
     public void delete(Integer id) {
-        String sql = "DELETE from model WHERE id = ?";
+        String sql = "DELETE from mobile WHERE id = ?";
         Connection connection = DataBaseUtils.getConnection();
-        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
