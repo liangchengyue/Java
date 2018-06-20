@@ -18,7 +18,7 @@ public class Test {
         user.setAdmin(true);
         user.setPassword("zxx1234567");
 //        userService.delete(7);
-        userService.update(user);
-        System.out.print("");
+        int i=userService.findAll().size();
+        System.out.print(i);
     }
 }

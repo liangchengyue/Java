@@ -27,5 +27,6 @@ public class AddUserAction extends BaseAction {
         UserService userService=new UserServiceImp();
         userService.save(user);
 
+
     }
 }
