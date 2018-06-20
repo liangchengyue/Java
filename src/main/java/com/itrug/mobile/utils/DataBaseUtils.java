@@ -23,6 +23,7 @@ public class DataBaseUtils {
     }
 
     public static Connection getConnection() {
+        DataBaseUtils.init();
         return connection;
     }
 
