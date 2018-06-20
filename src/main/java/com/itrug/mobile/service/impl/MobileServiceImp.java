@@ -12,7 +12,7 @@ public class MobileServiceImp implements MobileService {
 
     @Override
     public Mobile get(Integer id) {
-        return null;
+        return mobileDao.get(id);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MobileServiceImp implements MobileService {
 
     @Override
     public Mobile update(Mobile mobile) {
-        return null;
+        return mobileDao.update(mobile);
     }
 
     @Override
