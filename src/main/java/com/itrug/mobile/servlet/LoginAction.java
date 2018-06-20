@@ -9,22 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-@WebServlet(urlPatterns = "/addUser")
-public class AddUserAction extends BaseAction {
+@WebServlet(urlPatterns = "/login")
+public class LoginAction extends BaseAction {
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       System.out.println("----------------------");
         User user=new User();
-        user.setNickname(request.getParameter("nickname"));
-        user.setPassword(request.getParameter("password"));
         user.setUsername(request.getParameter("username"));
-        user.setAge(Integer.parseInt(request.getParameter("age")));
-        if (request.getParameter("sex")=="男")
-        {
-            user.setSex(true);
+        user.setPassword(request.getParameter("password"));
+        if (request.getParameter("isAdmin")=="true"){
+            user.setAdmin(true);
         }else {
-            user.setSex(false);
+            user.setAdmin(false);
         }
         UserService userService=new UserServiceImp();
-        userService.save(user);
+        user=userService.login(user);
+        if (user!=null){
+            request.getSession().setAttribute("user",user);
+        }
+
     }
 }

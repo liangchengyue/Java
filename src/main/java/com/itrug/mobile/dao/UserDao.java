@@ -13,4 +13,11 @@ public interface UserDao extends GenericDao<User, Integer> {
      */
     User findByUserName(String username);
 
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
+    User login(User user);
+
 }
