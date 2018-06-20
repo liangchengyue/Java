@@ -10,6 +10,6 @@ import java.io.IOException;
 public class TestAction extends BaseAction {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("---------------------------------1werwrew--12");
+        System.out.println("---------------------");
     }
 }

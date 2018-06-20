@@ -149,4 +149,27 @@ public class UserDaoImpl implements UserDao {
         }
         return user;
     }
+
+    @Override
+    public User login(User user) {
+        String sql = "SELECT id,nickname,username,age,sex,isadmin FROM `user` tu WHERE tu.username = ? and tu.password=? and isadmin=?";
+        Connection connection = DataBaseUtils.getConnection();
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
+        try {
+            statement.setString(1, user.getUsername());
+            statement.setString(2,user.getPassword());
+            statement.setBoolean(3,user.isAdmin());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt(1));
+                user.setUsername(resultSet.getString(2));
+                user.setPassword(resultSet.getString(3));
+            }
+            DataBaseUtils.closeStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
