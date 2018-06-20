@@ -47,14 +47,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> userList=new ArrayList<User>();
-        User user;
+
         String sql="SELECT id,nickname,username,age,sex,isadmin FROM `user`";
         Connection connection=DataBaseUtils.getConnection();
         PreparedStatement statement=DataBaseUtils.getPreparedStatement(connection,sql,false);
         try {
             ResultSet resultSet=statement.executeQuery();
-            if(resultSet.next()){
-                user=new User();
+            while (resultSet.next()){
+                User user=new User();
                 user.setId(resultSet.getInt("id"));
                 user.setAdmin(resultSet.getBoolean("isadmin"));
                 user.setAge(resultSet.getInt("age"));
