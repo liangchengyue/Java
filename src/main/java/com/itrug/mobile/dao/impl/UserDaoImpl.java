@@ -8,10 +8,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+    /**
+     * 通过ID获取用户信息
+     * @param id
+     * @return
+     */
     public User get(Integer id) {
         User user=new User();
         String sql="SELECT id,nickname,username,age," +
@@ -40,23 +46,45 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return null;
+        List<User> userList=new ArrayList<User>();
+        User user;
+        String sql="SELECT id,nickname,username,age,sex,isadmin FROM `user`";
+        Connection connection=DataBaseUtils.getConnection();
+        PreparedStatement statement=DataBaseUtils.getPreparedStatement(connection,sql,false);
+        try {
+            ResultSet resultSet=statement.executeQuery();
+            if(resultSet.next()){
+                user=new User();
+                user.setId(resultSet.getInt("id"));
+                user.setAdmin(resultSet.getBoolean("isadmin"));
+                user.setAge(resultSet.getInt("age"));
+                user.setNickName(resultSet.getString("nickname"));
+                user.setSex(resultSet.getBoolean("sex"));
+                user.setUsername(resultSet.getString("username"));
+                userList.add(user);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
+        }
+        return userList;
     }
 
     @Override
     public User save(User user) {
-        String sql = "INSERT INTO t_users(username,password) VALUES(?,?)";
+        String sql = "INSERT INTO `user`(nickname,password,username,age,sex,isadmin) VALUES(?,?,?,?,?,?)";
         Connection connection = DataBaseUtils.getConnection();
-        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
-            statement.setString(1, user.getUsername());
+            statement.setString(1, user.getNickname());
             statement.setString(2, user.getPassword());
-            int rows = statement.executeUpdate();
-            //获取自增主键
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                user.setId(resultSet.getInt(1));
-            }
+            statement.setString(3, user.getUsername());
+            statement.setInt(4, user.getAge());
+            statement.setBoolean(5, user.isSex());
+            statement.setBoolean(6, user.isAdmin());
+            statement.executeUpdate();
             DataBaseUtils.closeStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,12 +94,24 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
+        String sql="DELETE FROM `user` WHERE id=?";
+
         return null;
     }
 
     @Override
-    public void delete(Integer s) {
-
+    public void delete(Integer id) {
+        String sql="DELETE FROM `user` WHERE id=?";
+        Connection connection = DataBaseUtils.getConnection();
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
+        User user = null;
+        try {
+            statement.setInt(1, id);
+            statement.execute();
+            DataBaseUtils.closeStatement(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface GenericService<T, Type extends Serializable> {
      *
      * @return
      */
-    List<Mobile> findAll();
+    List<T> findAll();
 
     /**
      * 保存实体

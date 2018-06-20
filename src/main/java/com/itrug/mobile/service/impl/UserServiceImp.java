@@ -20,8 +20,8 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<Mobile> findAll() {
-        return null;
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void delete(Integer id) {
-
+        userDao.delete(id);
     }
 
     @Override
