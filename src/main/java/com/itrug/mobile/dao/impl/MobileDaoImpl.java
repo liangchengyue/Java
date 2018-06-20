@@ -17,12 +17,33 @@ import java.util.List;
 public class MobileDaoImpl implements MobileDao {
     @Override
     public Mobile get(Integer id) {
-        return null;
+        Mobile mobile=new Mobile();
+        String sql="SELECT id,name,image,price,model,vendor from mobile where id=?";
+        Connection connection=DataBaseUtils.getConnection();
+        PreparedStatement statement=DataBaseUtils.getPreparedStatement(connection,sql,false);
+        try {
+            statement.setInt(1,id);
+            ResultSet resultSet=statement.executeQuery();
+            if (resultSet.next()){
+                mobile.setId(resultSet.getInt("id"));
+                mobile.setImage(resultSet.getString("image"));
+                mobile.setModel(resultSet.getString("model"));
+                mobile.setPrice(resultSet.getDouble("price"));
+                mobile.setName(resultSet.getString("name"));
+                mobile.setVendor(resultSet.getString("vendor"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
+        }
+        return mobile;
     }
 
     @Override
     public List<Mobile> findAll() {
-        String sql = "select id,price,image,model,vendor from t_mobiles";
+        String sql = "SELECT id,name,image,price,model,vendor from mobile";
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
         List<Mobile> mobileList = new ArrayList<Mobile>();
@@ -30,11 +51,12 @@ public class MobileDaoImpl implements MobileDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Mobile mobile = new Mobile();
-                mobile.setId(resultSet.getInt(1));
-                mobile.setPrice(resultSet.getDouble(2));
-                mobile.setImage(resultSet.getString(3));
-                mobile.setModel(resultSet.getString(4));
-                mobile.setVendor(resultSet.getString(5));
+                mobile.setId(resultSet.getInt("id"));
+                mobile.setImage(resultSet.getString("image"));
+                mobile.setModel(resultSet.getString("model"));
+                mobile.setPrice(resultSet.getDouble("price"));
+                mobile.setName(resultSet.getString("name"));
+                mobile.setVendor(resultSet.getString("vendor"));
                 mobileList.add(mobile);
             }
             DataBaseUtils.closeStatement(statement);
@@ -46,43 +68,65 @@ public class MobileDaoImpl implements MobileDao {
 
     @Override
     public Mobile save(Mobile mobile) {
-        String sql = "INSERT INTO t_mobiles (price,image,model,vendor) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO model(name,image,price,model,vendor) VALUES(?,?,?,?,?)";
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
         try {
-            statement.setDouble(1, mobile.getPrice());
+            statement.setString(1,mobile.getName());
             statement.setString(2, mobile.getImage());
-            statement.setString(3, mobile.getModel());
-            statement.setString(4, mobile.getVendor());
+            statement.setDouble(3, mobile.getPrice());
+            statement.setString(4, mobile.getModel());
+            statement.setString(5, mobile.getVendor());
             int rows = statement.executeUpdate();
             //获取自增主键
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 mobile.setId(resultSet.getInt(1));
             }
-            DataBaseUtils.closeStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
         }
         return mobile;
     }
 
     @Override
     public Mobile update(Mobile mobile) {
-        return null;
+        String sql="UPDATE model SET name=?,image=?,price=?,model=?,vendor=? WHERE id=?";
+        Connection connection = DataBaseUtils.getConnection();
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
+        try {
+            statement.setString(1,mobile.getName());
+            statement.setString(2,mobile.getImage());
+            statement.setDouble(3,mobile.getPrice());
+            statement.setString(4,mobile.getModel());
+            statement.setString(5,mobile.getVendor());
+            statement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
+        }
+
+        return mobile;
     }
 
     @Override
     public void delete(Integer id) {
-        String sql = "DELETE FROM t_mobiles WHERE id = ?";
+        String sql = "DELETE from model WHERE id = ?";
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, true);
         try {
             statement.setInt(1, id);
             int rows = statement.executeUpdate();
-            DataBaseUtils.closeStatement(statement);
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
         }
     }
 }
