@@ -13,19 +13,31 @@ import java.io.IOException;
 public class LoginAction extends BaseAction {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         User user=new User();
         user.setUsername(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
-        if (request.getParameter("isAdmin")=="true"){
+        System.out.println(request.getParameter("isAdmin").toString());
+        boolean isAdmin=request.getParameter("isAdmin").trim()=="管理员";
+        System.out.println(isAdmin);
+        if (isAdmin){
             user.setAdmin(true);
         }else {
             user.setAdmin(false);
         }
+        user.setAdmin(true);
         UserService userService=new UserServiceImp();
-        user=userService.login(user);
-        if (user!=null){
-            request.getSession().setAttribute("user",user);
+        User user1=userService.login(user);
+        if (user1!=null){
+            request.getSession().setAttribute("user",user1);
+            if (user1.isAdmin())
+            {
+                response.sendRedirect("manager.jsp");
+            }else {
+                response.sendRedirect("index.jsp");
+            }
+        }else {
+            response.sendRedirect("login.jsp");
         }
-
     }
 }

@@ -9,13 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-@WebServlet(urlPatterns = "/addUser")
-public class AddUserAction extends BaseAction {
+@WebServlet(urlPatterns = "/updateUser")
+public class UpdateUserAction extends  BaseAction {
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        User user=new User();
+        UserService userService=new UserServiceImp();
+        int id=Integer.parseInt(request.getParameter("id"));
+        User user=((UserServiceImp) userService).get(id);
         user.setNickname(request.getParameter("nickname"));
-        user.setPassword(request.getParameter("password"));
         user.setUsername(request.getParameter("username"));
         user.setAge(Integer.parseInt(request.getParameter("age")));
         if (request.getParameter("sex")=="男")
@@ -24,7 +26,7 @@ public class AddUserAction extends BaseAction {
         }else {
             user.setSex(false);
         }
-        UserService userService=new UserServiceImp();
-        userService.save(user);
+        userService.update(user);
+        response.sendRedirect("listUser");
     }
 }

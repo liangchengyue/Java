@@ -163,8 +163,9 @@ public class UserDaoImpl implements UserDao {
             while (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt(1));
-                user.setUsername(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
+                user.setNickname(resultSet.getString(2));
+                user.setUsername(resultSet.getString(3));
+                user.setAdmin(resultSet.getBoolean(6));
             }
             DataBaseUtils.closeStatement(statement);
         } catch (SQLException e) {

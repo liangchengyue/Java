@@ -10,6 +10,15 @@
 <html>
 <head>
     <title>用户列表</title>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script>
+        function deleteUser(id) {
+            if (window.confirm("确认删除吗？")) {
+                window.location.href="deleteUser?id="+id;
+            }
+
+        }
+    </script>
 </head>
 <body>
     <table style="border: 1px saddlebrown solid;">
@@ -28,7 +37,7 @@
             <td>${item.nickname}</td>
             <td>${item.age}</td>
             <td>${item.sex}</td>
-            <td><a href="#">修改</a>|<a href="#">删除</a></td>
+            <td><a href="findUserById?id=${item.id}">修改</a>|<a href="javascript:;" onclick="deleteUser(${item.id})">删除</a></td>
         </tr>
         </c:forEach>
 

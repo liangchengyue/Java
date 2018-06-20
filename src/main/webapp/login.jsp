@@ -11,7 +11,7 @@
     <title>登录</title>
 </head>
 <body>
-<form action="/login" method="post">
+<form action="login" method="post">
     <table>
         <tr>
             <th>用户名：</th>
@@ -24,8 +24,8 @@
         <tr>
             <th>用户类型：</th>
             <td><select name="isAdmin">
-                <option value="false">普通用户</option>
-                <option value="true">管理员</option>
+                <option value="普通用户">普通用户</option>
+                <option value="管理员">管理员</option>
             </select>&nbsp;&nbsp;&nbsp;<a href="add_user.jsp">注册</a></td>
         </tr>
         <tr>
