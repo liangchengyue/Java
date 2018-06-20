@@ -8,6 +8,6 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/Test")
 public class TestServlet extends BaseServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("1233____");
+        System.out.println("1233____1223");
     }
 }
