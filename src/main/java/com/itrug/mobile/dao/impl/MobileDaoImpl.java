@@ -72,7 +72,7 @@ public class MobileDaoImpl implements MobileDao {
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
-            statement.setString(1,mobile.getName());
+            statement.setString(1,mobile.getVendor());
             statement.setString(2, mobile.getImage());
             statement.setDouble(3, mobile.getPrice());
             statement.setString(4, mobile.getModel());
@@ -93,7 +93,7 @@ public class MobileDaoImpl implements MobileDao {
         Connection connection = DataBaseUtils.getConnection();
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
-            statement.setString(1,mobile.getName());
+            statement.setString(1,mobile.getVendor());
             statement.setString(2,mobile.getImage());
             statement.setDouble(3,mobile.getPrice());
             statement.setString(4,mobile.getModel());

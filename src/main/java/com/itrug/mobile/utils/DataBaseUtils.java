@@ -3,7 +3,7 @@ package com.itrug.mobile.utils;
 import java.sql.*;
 
 public class DataBaseUtils {
-    private static final String url = "jdbc:mysql://47.94.169.241:3306/mobile";
+    private static final String url = "jdbc:mysql://47.94.169.241:3306/mobile?characterEncoding=utf-8";
     private static final String username = "root";
     private static final String password = "zxx123456";
     private static Connection connection;

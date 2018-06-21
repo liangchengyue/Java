@@ -48,7 +48,7 @@ public class OrderDaoImpl implements OrderDao {
         PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
         try {
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 Order order = new Order();
                 order.setId(resultSet.getInt("id"));
                 order.setCrateTime(resultSet.getTime("createtime"));
@@ -126,5 +126,34 @@ public class OrderDaoImpl implements OrderDao {
             DataBaseUtils.closeStatement(statement);
             DataBaseUtils.closeConnection(connection);
         }
+    }
+
+    @Override
+    public List<Order> findOrderByUserId(int userid) {
+        List<Order> orderList = new ArrayList<Order>();
+        String sql = "SELECT id,price,userid,mobileid,number,ispay,createtime from `order` where userid=?";
+        Connection connection = DataBaseUtils.getConnection();
+        PreparedStatement statement = DataBaseUtils.getPreparedStatement(connection, sql, false);
+        try {
+            statement.setInt(1, userid);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setCrateTime(resultSet.getTime("createtime"));
+                order.setMobileId(resultSet.getInt("mobileid"));
+                order.setUserId(resultSet.getInt("userid"));
+                order.setPay(resultSet.getBoolean("ispay"));
+                order.setNumber(resultSet.getInt("number"));
+                order.setPrice(resultSet.getDouble("price"));
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtils.closeStatement(statement);
+            DataBaseUtils.closeConnection(connection);
+        }
+        return orderList;
     }
 }

@@ -22,7 +22,10 @@ public class Order {
     private int number;
 
     //支付状态  支付/未支付
-    private boolean isPay;
+    private boolean pay;
+
+
+    private Mobile mobile;
 
     //创建时间
     private Date crateTime;
@@ -63,16 +66,24 @@ public class Order {
         return number;
     }
 
+    public Mobile getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(Mobile mobile) {
+        this.mobile = mobile;
+    }
+
     public void setNumber(int number) {
         this.number = number;
     }
 
     public boolean isPay() {
-        return isPay;
+        return pay;
     }
 
     public void setPay(boolean pay) {
-        isPay = pay;
+       this.pay = pay;
     }
 
     public Date getCrateTime() {
