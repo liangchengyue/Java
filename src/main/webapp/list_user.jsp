@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-    <table style="border: 1px saddlebrown solid;">
+    <table border="1px" style="border-collapse:collapse;">
         <tr>
             <th>编号</th>
             <th>登录名</th>
@@ -36,11 +36,14 @@
             <td>${item.username}</td>
             <td>${item.nickname}</td>
             <td>${item.age}</td>
-            <td>${item.sex}</td>
+            <td><c:if test="${item.sex}">男</c:if>
+                <c:if test="${item.sex!=true}">女</c:if>
+            </td>
             <td><a href="findUserById?id=${item.id}">修改</a>|<a href="javascript:;" onclick="deleteUser(${item.id})">删除</a></td>
         </tr>
         </c:forEach>
 
     </table>
+<a href="add_user.jsp">添加用户</a>&nbsp;<a href="manager.jsp">返回管理界面</a>
 </body>
 </html>

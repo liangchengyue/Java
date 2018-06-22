@@ -17,10 +17,10 @@
         <a href="listUser">用户管理</a>
     </li>
     <li>
-        <a href="/listOrder">订单管理</a>
+        <a href="orderListManager">订单管理</a>
     </li>
     <li>
-        <a href="/listMobile">手机管理</a></li>
+        <a href="listMobile">手机管理</a></li>
 </ul>
 </body>
 </html>

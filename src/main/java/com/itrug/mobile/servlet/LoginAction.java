@@ -23,11 +23,9 @@ public class LoginAction extends BaseAction {
         }else {
             user.setAdmin(false);
         }
-        user.setAdmin(true);
         UserService userService=new UserServiceImp();
         User user1=userService.login(user);
-
-        if (user1!=null){
+        if (user1.getUsername()!=null&&user1.getUsername()!=""){
             request.getSession().setAttribute("user",user1);
             if (user1.isAdmin())
             {
